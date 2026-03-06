@@ -13,6 +13,7 @@ public class Enemy : MonoBehaviour
     public float health = 10;    // Damage needed to destroy this enemy
     public int score = 100;   // Points earned for destroying this
     public float powerUpDropChance = 1f;
+    public static float speedMultiplier = 1f;
 
 
     // private BoundsCheck bndCheck;                                             // b
@@ -53,7 +54,7 @@ public class Enemy : MonoBehaviour
     public virtual void Move()
     { // c
         Vector3 tempPos = pos;
-        tempPos.y -= speed * Time.deltaTime;
+        tempPos.y -= speed * speedMultiplier * Time.deltaTime;
         pos = tempPos;
     }
 
