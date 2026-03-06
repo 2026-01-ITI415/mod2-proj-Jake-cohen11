@@ -1,0 +1,22 @@
+using TMPro;
+using UnityEngine;
+
+public class GameManager : MonoBehaviour
+{
+    public static GameManager instance;
+
+    public TextMeshProUGUI scoreText;
+
+    int score = 0;
+
+    void Awake()
+    {
+        instance = this;
+    }
+
+    public void AddScore(int amount)
+    {
+        score += amount;
+        scoreText.text = "Score: " + score;
+    }
+}

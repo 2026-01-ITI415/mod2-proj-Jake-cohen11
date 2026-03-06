@@ -75,7 +75,7 @@ public class Enemy : MonoBehaviour
                     if (!calledShipDestroyed)
                     {
                         calledShipDestroyed = true;
-                        Main.SHIP_DESTROYED(this);
+                        GameManager.instance.AddScore(score);
                     }
                     // Destroy this Enemy
                     Destroy(this.gameObject);

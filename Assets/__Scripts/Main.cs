@@ -1,11 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;   // Enables the loading & reloading of scenes
+using UnityEngine.SceneManagement;
+using UnityEngine.SocialPlatforms.Impl;   // Enables the loading & reloading of scenes
+using TMPro;
 
 [RequireComponent(typeof(BoundsCheck))]
 public class Main : MonoBehaviour
 {
+    [Header("Game Stats")]
+    public TextMeshProUGUI scoreText;
+    public static int score = 0;
     static private Main S;                        // A private singleton for Main
     static private Dictionary<eWeaponType, WeaponDefinition> WEAP_DICT;
 
@@ -39,7 +44,16 @@ public class Main : MonoBehaviour
         {
             WEAP_DICT[def.type] = def;
         }
+        score = 0;
+        UpdateScore();
+    }
 
+    public void UpdateScore()
+    {
+        if (scoreText != null)
+        {
+            scoreText.text = "Score: " + score;
+        }
     }
 
     public void SpawnEnemy()
@@ -117,6 +131,12 @@ public class Main : MonoBehaviour
     /// <param name="e"The Enemy that was destroyed</param
     static public void SHIP_DESTROYED(Enemy e)
     {
+        score += e.score;
+
+        if (S != null)
+        {
+            S.UpdateScore();
+        }
         // Potentially generate a PowerUp
         if (Random.value <= e.powerUpDropChance)
         { // Underlined red for now  // c
