@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Hero : MonoBehaviour
 {
@@ -27,7 +28,7 @@ public class Hero : MonoBehaviour
     // Declare a new delegate type WeaponFireDelegate
     public delegate void WeaponFireDelegate();                                // a     // Create a WeaponFireDelegate event named fireEvent.
     public event WeaponFireDelegate fireEvent;
-
+    public TMP_Text weaponText;
 
 
     void Awake()
@@ -41,6 +42,7 @@ public class Hero : MonoBehaviour
             Debug.LogError("Hero.Awake() - Attempted to assign second Hero.S!");
         }
         //fireEvent += TempFire;
+        weaponText = GameObject.Find("Weapon").GetComponent<TMP_Text>();
 
         // Reset the weapons to start _Hero with 1 blaster
         ClearWeapons();
@@ -74,7 +76,30 @@ public class Hero : MonoBehaviour
             fireEvent();
         }
 
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            ToggleWeapon();
+        }
+
     }
+
+    void ToggleWeapon()
+    {
+        if (weapons[0].type == eWeaponType.blaster)
+        {
+            weapons[0].SetType(eWeaponType.spread);
+        }
+        else
+        {
+            weapons[0].SetType(eWeaponType.blaster);
+        }
+        weaponText.text = "weapon: " + weapons[0].type.ToString();
+    }
+
+    /*public void UpdateWeapon(Weapon w)
+    {
+        weaponText.text = "Weapon: " + w.def.letter;
+    }*/
 
 
     //void TempFire()
